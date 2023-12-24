@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../Assets/Style/Form.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="information">
+        <img
+          src="../Assets/Images/images__1_-removebg-preview.png"
+          alt="Logo"
+          class="logo"
+        />
+        <div class="center-text">
+          <p>
+            Learn highly sought <br />after skills <br />
+            without hassle.
+          </p>
+          <p style="font-size: 15px">
+            Earn a Diploma in highly-sought after skills.
+          </p>
+        </div>
+        <div class="bottom-content">
+          <div class="social-icons">
+            <i class="fab fa-facebook"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-linkedin"></i>
+          </div>
+          <p>©2023 AltSchool Africa. All rights reserved.</p>
+        </div>
+      </div>
+      <div class="form clearfix">
+        <h1>Application Form</h1>
+        <p style="margin: 30px 10px">Fill in your details</p>
+        <!-- creating registration form elements -->
+        <form>
+          <div>
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" required />
+
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" required />
+          </div>
+
+          <div>
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required />
+          </div>
+
+          <div>
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required />
+
+            <label for="education">Education Level:</label>
+            <select id="education" name="education">
+              <option value="Bsc">Bsc</option>
+              <option value="Msc">Msc</option>
+              <option value="Diplomat">Diplomat</option>
+              <option value="Doctorate(PhD)">Doctorate(PhD)</option>
+              <option value="High School">High School</option>
+              <option value="Secondary School">Secondary School</option>
+              <option value="Undergraduate">Undergraduate</option>
+              <option value="Junior School/Middle School">
+                Junior School/Middle School
+              </option>
+              <option value="PostGraduate">PostGraduate</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="country">Country</label>
+            <select id="country" name="country">
+              <option value="">Select your country</option>
+            </select>
+
+            <label for="stateCity">State/City of Residence:</label>
+            <input type="text" id="stateCity" name="stateCity" required />
+          </div>
+
+          <div>
+            <label for="employmentStatus">Employment Status:</label>
+            <select id="employmentStatus" name="employmentStatus" required>
+              <option value="employed">Employed</option>
+              <option value="unemployed">Unemployed</option>
+              <option value="student">Student</option>
+              <option value="other">Other</option>
+            </select>
+
+            <label for="phone">Phone Number:</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="09044848899"
+            />
+          </div>
+
+          <div>
+            <label for="school"> Choose School:</label>
+            <select id="school" name="school" required>
+              <option value="">Select school</option>
+              <option value="CreativeEconomy">
+                School of Creative Economy
+              </option>
+              <option value="business">School of Business</option>
+            </select>
+
+            <label for="course">Course of Study:</label>
+            <select id="course" name="course" required>
+              <option value="">Select course</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="howDidYouHear">How did you hear about us:</label>
+            <input type="text" id="howDidYouHear" name="howDidYouHear" />
+
+            <label for="discountCode"
+              >Scholarship/Discount Code (optional):</label
+            >
+            <input type="text" id="discountCode" name="discountCode" />
+          </div>
+
+          <p style="margin-left: 100px">
+            By clicking continue, I agree to Terms of Use and acknowledge that I
+            have read the Privacy Policy.
+          </p>
+
+          <input style="color: white" type="submit" value="Proceed" />
+          <p style="margin-left: 270px">Already have an account? Sign In</p>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // Fetch data from the REST Countries API
+      fetch("https://restcountries.com/v3.1/all")
+        .then((response) => response.json())
+        .then((data) => {
+          const countrySelect = document.getElementById("country");
+          data.forEach((country) => {
+            const option = document.createElement("option");
+            option.value = country.name.common;
+            option.textContent = country.name.common;
+            countrySelect.appendChild(option);
+          });
+        })
+        .catch((error) => {
+          console.log("Error fetching data:", error);
+        });
+
+      const coursesBySchool = {
+        CreativeEconomy: [
+          "Navigating the Music Business in Africa: Afrobeats Case Study",
+          "Content Mastery for African Creators",
+        ],
+        business: ["High Impact Selling: From Prospecting to Closing "],
+      };
+
+      const schoolSelect = document.getElementById("school");
+      const courseSelect = document.getElementById("course");
+
+      schoolSelect.addEventListener("change", function () {
+        const selectedSchool = this.value;
+        courseSelect.innerHTML = '<option value="">Select a course</option>'; // Reset course options
+        if (selectedSchool) {
+          const courses = coursesBySchool[selectedSchool];
+          courses.forEach((course) => {
+            const option = document.createElement("option");
+            option.value = course;
+            option.textContent = course;
+            courseSelect.appendChild(option);
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
